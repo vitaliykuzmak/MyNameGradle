@@ -1,0 +1,37 @@
+plugins {
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group 'com.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.9' // або інша версія
+}
+
+application {
+    mainClass = 'com.example.App' // Вкажіть свій головний клас
+}
+
+shadowJar {
+    archiveBaseName.set('MyNameGradle')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+    mergeServiceFiles()
+}
+
+tasks.named('startShadowScripts') {
+    dependsOn shadowJar
+}
+
+tasks.named('startScripts') {
+    dependsOn shadowJar
+    dependsOn jar
+}
+
+
